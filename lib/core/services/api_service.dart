@@ -39,7 +39,6 @@ class ApiService {
     }
   }
 
-  // Get popular movies
   Future<List<Movie>> getPopularMovies({int page = 1}) async {
     final response = await _get(ApiConstants.popularMovies, params: {
       'page': page.toString(),
@@ -49,7 +48,6 @@ class ApiService {
     return results.map((json) => Movie.fromJson(json)).toList();
   }
 
-  // Get top rated movies
   Future<List<Movie>> getTopRatedMovies({int page = 1}) async {
     final response = await _get(ApiConstants.topRatedMovies, params: {
       'page': page.toString(),
@@ -59,7 +57,6 @@ class ApiService {
     return results.map((json) => Movie.fromJson(json)).toList();
   }
 
-  // Get now playing movies
   Future<List<Movie>> getNowPlayingMovies({int page = 1}) async {
     final response = await _get(ApiConstants.nowPlayingMovies, params: {
       'page': page.toString(),
@@ -69,7 +66,6 @@ class ApiService {
     return results.map((json) => Movie.fromJson(json)).toList();
   }
 
-  // Get upcoming movies
   Future<List<Movie>> getUpcomingMovies({int page = 1}) async {
     final response = await _get(ApiConstants.upcomingMovies, params: {
       'page': page.toString(),
@@ -79,7 +75,6 @@ class ApiService {
     return results.map((json) => Movie.fromJson(json)).toList();
   }
 
-  // Search movies
   Future<List<Movie>> searchMovies(String query, {int page = 1}) async {
     if (query.isEmpty) return [];
 
@@ -92,7 +87,6 @@ class ApiService {
     return results.map((json) => Movie.fromJson(json)).toList();
   }
 
-  // Get movie details
   Future<MovieDetail> getMovieDetails(int movieId) async {
     final response = await _get('${ApiConstants.movieDetails}/$movieId');
     return MovieDetail.fromJson(response);

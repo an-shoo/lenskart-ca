@@ -92,7 +92,6 @@ class _CircularRatingWidgetState extends State<CircularRatingWidget>
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // Background circle
               Container(
                 width: widget.size - 4,
                 height: widget.size - 4,
@@ -102,7 +101,6 @@ class _CircularRatingWidgetState extends State<CircularRatingWidget>
                 ),
               ),
               
-              // Progress arc
               CustomPaint(
                 size: Size(widget.size - 8, widget.size - 8),
                 painter: _CircularProgressPainter(
@@ -113,7 +111,6 @@ class _CircularRatingWidgetState extends State<CircularRatingWidget>
                 ),
               ),
               
-              // Center content
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -163,7 +160,6 @@ class _CircularProgressPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = (size.width - strokeWidth) / 2;
 
-    // Background arc
     final backgroundPaint = Paint()
       ..color = backgroundColor
       ..style = PaintingStyle.stroke
@@ -172,7 +168,6 @@ class _CircularProgressPainter extends CustomPainter {
 
     canvas.drawCircle(center, radius, backgroundPaint);
 
-    // Progress arc
     final progressPaint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
@@ -182,13 +177,12 @@ class _CircularProgressPainter extends CustomPainter {
     final sweepAngle = 2 * math.pi * progress;
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
-      -math.pi / 2, // Start from top
+      -math.pi / 2,
       sweepAngle,
       false,
       progressPaint,
     );
 
-    // Glow effect at the end of the progress
     if (progress > 0) {
       final glowPaint = Paint()
         ..color = color.withOpacity(0.5)

@@ -9,7 +9,6 @@ class StorageService {
   static Future<SharedPreferences> get _prefs async =>
       await SharedPreferences.getInstance();
 
-  // Favourites
   static Future<List<Movie>> getFavourites() async {
     final prefs = await _prefs;
     final jsonString = prefs.getString(_favouritesKey);
@@ -44,7 +43,6 @@ class StorageService {
     return favourites.any((m) => m.id == movieId);
   }
 
-  // Watchlist
   static Future<List<Movie>> getWatchlist() async {
     final prefs = await _prefs;
     final jsonString = prefs.getString(_watchlistKey);

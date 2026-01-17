@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _setupAnimations();
-    // Defer initialization until after build to avoid setState during build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeApp();
     });
@@ -62,14 +61,12 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _initializeApp() async {
-    // Load initial data
     await Future.wait([
       context.read<MovieProvider>().loadPopularMovies(),
       context.read<FavouritesProvider>().loadFavourites(),
       context.read<WatchlistProvider>().loadWatchlist(),
     ]);
 
-    // Wait for animation to complete
     await Future.delayed(const Duration(milliseconds: 2500));
 
     if (mounted) {
@@ -105,14 +102,12 @@ class _SplashScreenState extends State<SplashScreen>
         ),
         child: Stack(
           children: [
-            // Background pattern
             Positioned.fill(
               child: CustomPaint(
                 painter: _BackgroundPatternPainter(),
               ),
             ),
             
-            // Main content
             Center(
               child: AnimatedBuilder(
                 animation: _controller,
@@ -120,7 +115,6 @@ class _SplashScreenState extends State<SplashScreen>
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Logo
                       Transform.scale(
                         scale: _scaleAnimation.value,
                         child: Opacity(
@@ -157,7 +151,6 @@ class _SplashScreenState extends State<SplashScreen>
                       
                       const SizedBox(height: 32),
                       
-                      // App name
                       Transform.translate(
                         offset: Offset(0, _slideAnimation.value),
                         child: Opacity(
@@ -200,7 +193,6 @@ class _SplashScreenState extends State<SplashScreen>
                       
                       const SizedBox(height: 80),
                       
-                      // Loading indicator
                       Opacity(
                         opacity: _fadeAnimation.value,
                         child: SizedBox(
@@ -233,7 +225,6 @@ class _BackgroundPatternPainter extends CustomPainter {
       ..color = AppColors.primary.withOpacity(0.03)
       ..style = PaintingStyle.fill;
 
-    // Draw subtle circles in background
     for (int i = 0; i < 5; i++) {
       final x = size.width * (0.1 + i * 0.2);
       final y = size.height * (0.2 + (i % 2) * 0.3);

@@ -41,10 +41,8 @@ class MovieCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              // Movie poster
               _buildPoster(),
               
-              // Gradient overlay
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -61,7 +59,6 @@ class MovieCard extends StatelessWidget {
                 ),
               ),
               
-              // Content
               Positioned(
                 left: 12,
                 right: 12,
@@ -70,7 +67,6 @@ class MovieCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Title
                     Text(
                       movie.title,
                       maxLines: 2,
@@ -85,7 +81,6 @@ class MovieCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     
-                    // Genre chips
                     if (movie.genreIds.isNotEmpty)
                       Wrap(
                         spacing: 4,
@@ -118,10 +113,8 @@ class MovieCard extends StatelessWidget {
                       ),
                     const SizedBox(height: 8),
                     
-                    // Rating and actions row
                     Row(
                       children: [
-                        // Rating
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
@@ -153,7 +146,6 @@ class MovieCard extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        // Action buttons
                         _ActionButton(
                           icon: isFavourite
                               ? Icons.favorite_rounded
@@ -175,7 +167,6 @@ class MovieCard extends StatelessWidget {
                 ),
               ),
               
-              // Year badge
               if (movie.releaseYear.isNotEmpty)
                 Positioned(
                   top: 12,

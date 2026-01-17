@@ -32,7 +32,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   void initState() {
     super.initState();
     _setupAnimations();
-    // Defer loading until after build to avoid setState during build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadMovieDetails();
     });
@@ -110,20 +109,16 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
         builder: (context, provider, _) {
           return Stack(
             children: [
-              // Background gradient
               Container(
                 decoration: const BoxDecoration(
                   gradient: AppColors.backgroundGradient,
                 ),
               ),
               
-              // Content
               CustomScrollView(
                 slivers: [
-                  // App bar with backdrop
                   _buildSliverAppBar(),
                   
-                  // Movie details
                   SliverToBoxAdapter(
                     child: AnimatedBuilder(
                       animation: _animationController,
@@ -211,10 +206,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
       ],
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
-          fit: StackFit.expand,
-          children: [
-            // Backdrop image
-            if (widget.movie.backdropUrl.isNotEmpty)
+        fit: StackFit.expand,
+        children: [
+          if (widget.movie.backdropUrl.isNotEmpty)
               Image.network(
                 widget.movie.backdropUrl,
                 fit: BoxFit.cover,
@@ -241,7 +235,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
             else
               Container(color: AppColors.surface),
             
-            // Gradient overlay
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -283,23 +276,20 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
       );
     }
 
-    // Calculate responsive rating size based on screen width
     final screenWidth = MediaQuery.of(context).size.width;
     final ratingSize = screenWidth > 600 
-        ? 100.0  // Larger for tablets/web
-        : screenWidth * 0.18; // Responsive for mobile (18% of screen width)
-    final clampedRatingSize = ratingSize.clamp(70.0, 120.0); // Min 70, Max 120
+        ? 100.0
+        : screenWidth * 0.18;
+    final clampedRatingSize = ratingSize.clamp(70.0, 120.0);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Title and rating row
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Title and year
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,7 +312,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                 ),
               ),
               const SizedBox(width: 16),
-              // Circular rating - responsive size
               CircularRatingWidget(
                 rating: widget.movie.ratingPercentage,
                 size: clampedRatingSize,
@@ -332,7 +321,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
           
           const SizedBox(height: 24),
           
-          // Genre chips
           if (detail != null && detail.genres.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -377,7 +365,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
               ],
             ),
           
-          // Release date
           _buildSectionTitle('Release Date'),
           const SizedBox(height: 8),
           Row(
@@ -404,7 +391,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
           
           const SizedBox(height: 24),
           
-          // Runtime (if available)
           if (detail != null && detail.runtime != null)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -436,7 +422,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
               ],
             ),
           
-          // Overview
           _buildSectionTitle('Overview'),
           const SizedBox(height: 12),
           Container(
@@ -459,7 +444,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
           
           const SizedBox(height: 32),
           
-          // Play now button
           SizedBox(
             width: double.infinity,
             height: 56,

@@ -1,48 +1,41 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Primary palette - Amethyst Purple
   static const Color primary = Color(0xFF9B59B6);
   static const Color primaryDark = Color(0xFF7D3C98);
   static const Color primaryLight = Color(0xFFBB8FCE);
-  
-  // Accent - Soft Rose Pink
+
   static const Color accent = Color(0xFFE8B4CB);
   static const Color accentDark = Color(0xFFD48FB8);
-  
-  // Background colors
+
   static const Color background = Color(0xFF1A0B2E);
   static const Color surface = Color(0xFF2D1B3D);
   static const Color surfaceLight = Color(0xFF4A2C5A);
-  
-  // Text colors
+
   static const Color textPrimary = Color(0xFFE0E1DD);
   static const Color textSecondary = Color(0xFF778DA9);
   static const Color textMuted = Color(0xFF415A77);
-  
-  // Status colors
+
   static const Color success = Color(0xFFA8E6CF);
   static const Color error = Color(0xFFE63946);
   static const Color warning = Color(0xFFE8B4CB);
-  
-  // Rating colors
+
   static const Color ratingHigh = Color(0xFFA8E6CF);
   static const Color ratingMedium = Color(0xFFE8B4CB);
   static const Color ratingLow = Color(0xFFE63946);
-  
-  // Gradients
+
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [primaryDark, primary],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
-  
+
   static const LinearGradient backgroundGradient = LinearGradient(
     colors: [Color(0xFF1A0B2E), Color(0xFF2D1B3D)],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
-  
+
   static const LinearGradient cardGradient = LinearGradient(
     colors: [Color(0xFF2D1B3D), Color(0xFF1A0B2E)],
     begin: Alignment.topLeft,
@@ -57,8 +50,6 @@ class AppTheme {
       brightness: Brightness.dark,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.background,
-      
-      // Color scheme
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
         secondary: AppColors.accent,
@@ -69,8 +60,6 @@ class AppTheme {
         onSurface: AppColors.textPrimary,
         onError: Colors.white,
       ),
-      
-      // App bar theme
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -84,8 +73,6 @@ class AppTheme {
         ),
         iconTheme: IconThemeData(color: AppColors.textPrimary),
       ),
-      
-      // Bottom navigation bar theme
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.surface,
         selectedItemColor: AppColors.primary,
@@ -103,8 +90,6 @@ class AppTheme {
           fontWeight: FontWeight.w400,
         ),
       ),
-      
-      // Card theme
       cardTheme: CardTheme(
         color: AppColors.surface,
         elevation: 4,
@@ -113,8 +98,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(16),
         ),
       ),
-      
-      // Text theme
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontFamily: 'Poppins',
@@ -182,12 +165,11 @@ class AppTheme {
           letterSpacing: 0.5,
         ),
       ),
-      
-      // Input decoration theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surface,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
@@ -208,8 +190,6 @@ class AppTheme {
         prefixIconColor: AppColors.textMuted,
         suffixIconColor: AppColors.textMuted,
       ),
-      
-      // Elevated button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -228,14 +208,10 @@ class AppTheme {
           ),
         ),
       ),
-      
-      // Icon theme
       iconTheme: const IconThemeData(
         color: AppColors.textPrimary,
         size: 24,
       ),
-      
-      // Chip theme
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.surfaceLight.withOpacity(0.3),
         labelStyle: const TextStyle(
@@ -249,8 +225,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(20),
         ),
       ),
-      
-      // Snackbar theme
       snackBarTheme: SnackBarThemeData(
         backgroundColor: AppColors.surface,
         contentTextStyle: const TextStyle(
@@ -266,4 +240,3 @@ class AppTheme {
     );
   }
 }
-

@@ -9,33 +9,25 @@ enum LoadingState { initial, loading, loaded, error, empty }
 class MovieProvider extends ChangeNotifier {
   final ApiService _apiService = ApiService();
 
-  // Movies lists
   List<Movie> _popularMovies = [];
   List<Movie> _searchResults = [];
-  
-  // Movie detail
   MovieDetail? _selectedMovieDetail;
 
-  // States
   LoadingState _moviesState = LoadingState.initial;
   LoadingState _searchState = LoadingState.initial;
   LoadingState _detailState = LoadingState.initial;
 
-  // Error messages
   String _errorMessage = '';
   String _searchErrorMessage = '';
   String _detailErrorMessage = '';
 
-  // Search
   String _searchQuery = '';
   bool _isSearching = false;
   Timer? _searchDebounceTimer;
 
-  // Pagination
   int _currentPage = 1;
   bool _hasMorePages = true;
 
-  // Getters
   List<Movie> get popularMovies => _popularMovies;
   List<Movie> get searchResults => _searchResults;
   List<Movie> get displayedMovies => _isSearching ? _searchResults : _popularMovies;
@@ -53,7 +45,6 @@ class MovieProvider extends ChangeNotifier {
   bool get isSearching => _isSearching;
   bool get hasMorePages => _hasMorePages;
 
-  // Initialize and load popular movies
   Future<void> loadPopularMovies({bool refresh = false}) async {
     if (refresh) {
       _currentPage = 1;
@@ -93,17 +84,14 @@ class MovieProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Load more movies for pagination
   Future<void> loadMoreMovies() async {
     if (!_hasMorePages || _moviesState == LoadingState.loading) return;
     await loadPopularMovies();
   }
 
-  // Search movies with debounce
   void searchMovies(String query) {
     _searchQuery = query;
     
-    // Cancel previous timer
     _searchDebounceTimer?.cancel();
     
     if (query.isEmpty) {
@@ -114,13 +102,11 @@ class MovieProvider extends ChangeNotifier {
       return;
     }
 
-    // Debounce: wait 500ms before making API call
     _searchDebounceTimer = Timer(const Duration(milliseconds: 500), () {
       _performSearch(query);
     });
   }
 
-  // Perform the actual search
   Future<void> _performSearch(String query) async {
     _isSearching = true;
     _searchState = LoadingState.loading;
@@ -141,7 +127,6 @@ class MovieProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Clear search
   void clearSearch() {
     _searchDebounceTimer?.cancel();
     _searchQuery = '';
@@ -157,7 +142,6 @@ class MovieProvider extends ChangeNotifier {
     super.dispose();
   }
 
-  // Load movie details
   Future<void> loadMovieDetails(int movieId) async {
     _detailState = LoadingState.loading;
     _selectedMovieDetail = null;
@@ -176,7 +160,6 @@ class MovieProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Clear movie details
   void clearMovieDetails() {
     _selectedMovieDetail = null;
     _detailState = LoadingState.initial;

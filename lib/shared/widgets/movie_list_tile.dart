@@ -40,7 +40,6 @@ class MovieListTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Poster
             ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
@@ -53,14 +52,12 @@ class MovieListTile extends StatelessWidget {
               ),
             ),
             
-            // Content
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Title
                     Text(
                       movie.title,
                       maxLines: 2,
@@ -75,7 +72,6 @@ class MovieListTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     
-                    // Year and rating row
                     Row(
                       children: [
                         if (movie.releaseYear.isNotEmpty) ...[
@@ -123,7 +119,6 @@ class MovieListTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     
-                    // Genres
                     if (movie.genreIds.isNotEmpty)
                       Text(
                         GenreMap.getGenreNames(movie.genreIds.take(2).toList()).join(' • '),
@@ -137,7 +132,6 @@ class MovieListTile extends StatelessWidget {
                       ),
                     const SizedBox(height: 12),
                     
-                    // Action buttons
                     Row(
                       children: [
                         _ActionChip(

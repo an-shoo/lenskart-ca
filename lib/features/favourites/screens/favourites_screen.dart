@@ -31,7 +31,6 @@ class FavouritesScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // Header
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
                 child: Row(
@@ -80,7 +79,6 @@ class FavouritesScreen extends StatelessWidget {
               
               const SizedBox(height: 16),
               
-              // Content
               Expanded(
                 child: Consumer<FavouritesProvider>(
                   builder: (context, provider, _) {

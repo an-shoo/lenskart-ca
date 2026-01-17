@@ -30,7 +30,6 @@ class Genre {
   int get hashCode => id.hashCode;
 }
 
-// Static genre map for quick lookup
 class GenreMap {
   static final Map<int, String> genres = {
     28: 'Action',

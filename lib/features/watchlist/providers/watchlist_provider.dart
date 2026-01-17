@@ -12,7 +12,6 @@ class WatchlistProvider extends ChangeNotifier {
   bool get isEmpty => _watchlist.isEmpty;
   bool get isInitialized => _isInitialized;
 
-  // Initialize and load watchlist from storage
   Future<void> loadWatchlist() async {
     if (_isLoading) return;
     
@@ -30,12 +29,10 @@ class WatchlistProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Check if a movie is in watchlist
   bool isInWatchlist(int movieId) {
     return _watchlist.any((m) => m.id == movieId);
   }
 
-  // Toggle watchlist status
   Future<void> toggleWatchlist(Movie movie) async {
     if (isInWatchlist(movie.id)) {
       await removeFromWatchlist(movie.id);
@@ -44,7 +41,6 @@ class WatchlistProvider extends ChangeNotifier {
     }
   }
 
-  // Add to watchlist
   Future<void> addToWatchlist(Movie movie) async {
     if (!isInWatchlist(movie.id)) {
       _watchlist.add(movie);
@@ -53,14 +49,12 @@ class WatchlistProvider extends ChangeNotifier {
     }
   }
 
-  // Remove from watchlist
   Future<void> removeFromWatchlist(int movieId) async {
     _watchlist.removeWhere((m) => m.id == movieId);
     await StorageService.saveWatchlist(_watchlist);
     notifyListeners();
   }
 
-  // Clear all watchlist
   Future<void> clearWatchlist() async {
     _watchlist = [];
     await StorageService.saveWatchlist(_watchlist);

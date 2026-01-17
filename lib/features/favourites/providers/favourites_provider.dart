@@ -12,7 +12,6 @@ class FavouritesProvider extends ChangeNotifier {
   bool get isEmpty => _favourites.isEmpty;
   bool get isInitialized => _isInitialized;
 
-  // Initialize and load favourites from storage
   Future<void> loadFavourites() async {
     if (_isLoading) return;
     
@@ -30,12 +29,10 @@ class FavouritesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Check if a movie is in favourites
   bool isFavourite(int movieId) {
     return _favourites.any((m) => m.id == movieId);
   }
 
-  // Toggle favourite status
   Future<void> toggleFavourite(Movie movie) async {
     if (isFavourite(movie.id)) {
       await removeFromFavourites(movie.id);
@@ -44,7 +41,6 @@ class FavouritesProvider extends ChangeNotifier {
     }
   }
 
-  // Add to favourites
   Future<void> addToFavourites(Movie movie) async {
     if (!isFavourite(movie.id)) {
       _favourites.add(movie);
@@ -53,14 +49,12 @@ class FavouritesProvider extends ChangeNotifier {
     }
   }
 
-  // Remove from favourites
   Future<void> removeFromFavourites(int movieId) async {
     _favourites.removeWhere((m) => m.id == movieId);
     await StorageService.saveFavourites(_favourites);
     notifyListeners();
   }
 
-  // Clear all favourites
   Future<void> clearFavourites() async {
     _favourites = [];
     await StorageService.saveFavourites(_favourites);

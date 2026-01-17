@@ -67,7 +67,6 @@ class _MoviesScreenState extends State<MoviesScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              // Header
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
                 child: Column(
@@ -107,7 +106,6 @@ class _MoviesScreenState extends State<MoviesScreen> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    // Search bar
                     SearchBarWidget(
                       controller: _searchController,
                       onChanged: (query) {
@@ -122,11 +120,9 @@ class _MoviesScreenState extends State<MoviesScreen> {
                 ),
               ),
               
-              // Content
               Expanded(
                 child: Consumer<MovieProvider>(
                   builder: (context, provider, child) {
-                    // Show search results or popular movies
                     if (provider.isSearching) {
                       return _buildSearchResults(provider);
                     }
