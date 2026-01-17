@@ -14,7 +14,7 @@ class FavouritesProvider extends ChangeNotifier {
 
   Future<void> loadFavourites() async {
     if (_isLoading) return;
-    
+
     _isLoading = true;
     notifyListeners();
 
@@ -61,4 +61,3 @@ class FavouritesProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
-
