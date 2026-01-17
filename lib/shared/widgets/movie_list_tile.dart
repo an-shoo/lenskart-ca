@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/constants/spacing_constants.dart';
 import '../../core/models/movie.dart';
 import '../../core/models/genre.dart';
 
@@ -26,10 +27,10 @@ class MovieListTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
+        margin: const EdgeInsets.only(bottom: AppSpacing.md),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.md),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
@@ -42,8 +43,8 @@ class MovieListTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                bottomLeft: Radius.circular(16),
+                topLeft: Radius.circular(AppRadius.md),
+                bottomLeft: Radius.circular(AppRadius.md),
               ),
               child: SizedBox(
                 width: 100,
@@ -54,7 +55,7 @@ class MovieListTile extends StatelessWidget {
             
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(AppSpacing.md + 2),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -62,32 +63,27 @@ class MovieListTile extends StatelessWidget {
                       movie.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AppColors.textPrimary,
-                        fontSize: 15,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w600,
                         height: 1.2,
-                        fontFamily: 'Poppins',
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: AppSpacing.xs + 2),
                     
                     Row(
                       children: [
                         if (movie.releaseYear.isNotEmpty) ...[
                           Text(
                             movie.releaseYear,
-                            style: const TextStyle(
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: AppColors.textSecondary,
-                              fontSize: 12,
-                              fontFamily: 'Poppins',
                             ),
                           ),
-                          const SizedBox(width: 12),
+                          const SizedBox(width: AppSpacing.md),
                         ],
                         Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
+                            horizontal: AppSpacing.sm,
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
@@ -100,16 +96,14 @@ class MovieListTile extends StatelessWidget {
                               const Icon(
                                 Icons.star_rounded,
                                 color: Colors.white,
-                                size: 12,
+                                size: AppIconSize.xs,
                               ),
                               const SizedBox(width: 3),
                               Text(
                                 movie.voteAverage.toStringAsFixed(1),
-                                style: const TextStyle(
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   color: Colors.white,
-                                  fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  fontFamily: 'Poppins',
                                 ),
                               ),
                             ],
@@ -117,20 +111,18 @@ class MovieListTile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     
                     if (movie.genreIds.isNotEmpty)
                       Text(
                         GenreMap.getGenreNames(movie.genreIds.take(2).toList()).join(' • '),
-                        style: const TextStyle(
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppColors.textMuted,
-                          fontSize: 12,
-                          fontFamily: 'Poppins',
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     
                     Row(
                       children: [
@@ -143,7 +135,7 @@ class MovieListTile extends StatelessWidget {
                           activeColor: AppColors.error,
                           onTap: onFavouriteTap,
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: AppSpacing.sm),
                         _ActionChip(
                           icon: isInWatchlist
                               ? Icons.bookmark_rounded
@@ -234,12 +226,12 @@ class _ActionChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm + 2, vertical: AppSpacing.xs + 2),
         decoration: BoxDecoration(
           color: isActive
               ? activeColor.withOpacity(0.15)
               : AppColors.surfaceLight.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AppRadius.xs),
           border: Border.all(
             color: isActive
                 ? activeColor.withOpacity(0.4)
@@ -252,17 +244,15 @@ class _ActionChip extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 14,
+              size: AppIconSize.xs + 2,
               color: isActive ? activeColor : AppColors.textMuted,
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.xs),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 11,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w500,
                 color: isActive ? activeColor : AppColors.textMuted,
-                fontFamily: 'Poppins',
               ),
             ),
           ],

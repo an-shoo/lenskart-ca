@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/spacing_constants.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final TextEditingController controller;
@@ -42,7 +43,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         boxShadow: _isFocused
             ? [
                 BoxShadow(
@@ -56,10 +57,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       child: TextField(
         controller: widget.controller,
         focusNode: _focusNode,
-        style: const TextStyle(
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
           color: AppColors.textPrimary,
-          fontSize: 16,
-          fontFamily: 'Poppins',
         ),
         decoration: InputDecoration(
           hintText: 'Search movies...',
@@ -74,35 +73,35 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               ? GestureDetector(
                   onTap: widget.onClear,
                   child: Container(
-                    margin: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.all(AppSpacing.sm),
                     decoration: BoxDecoration(
                       color: AppColors.textMuted.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(AppRadius.xs),
                     ),
                     child: const Icon(
                       Icons.close_rounded,
                       color: AppColors.textPrimary,
-                      size: 18,
+                      size: AppIconSize.sm + 2,
                     ),
                   ),
                 )
               : null,
           filled: true,
           fillColor: AppColors.surface,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.lg),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppRadius.md),
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppRadius.md),
             borderSide: BorderSide(
               color: AppColors.surfaceLight.withOpacity(0.3),
               width: 1,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppRadius.md),
             borderSide: const BorderSide(
               color: AppColors.primary,
               width: 2,

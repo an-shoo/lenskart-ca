@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/spacing_constants.dart';
 import '../../../core/models/movie.dart';
 import '../providers/movie_provider.dart';
 import '../../favourites/providers/favourites_provider.dart';
@@ -74,7 +75,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(
-                        horizontalPadding, 16, horizontalPadding, 8),
+                        horizontalPadding, AppSpacing.lg, horizontalPadding, AppSpacing.sm),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -93,7 +94,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height: AppSpacing.xs),
                                 Text(
                                   'Find your next favorite movie',
                                   style: Theme.of(context).textTheme.bodyMedium,
@@ -101,20 +102,20 @@ class _MoviesScreenState extends State<MoviesScreen> {
                               ],
                             ),
                             Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(AppSpacing.md),
                               decoration: BoxDecoration(
                                 color: AppColors.surface,
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(AppRadius.md),
                               ),
                               child: const Icon(
                                 Icons.movie_filter_rounded,
                                 color: AppColors.primary,
-                                size: 28,
+                                size: AppIconSize.xl,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: AppSpacing.xl),
                         SearchBarWidget(
                           controller: _searchController,
                           onChanged: (query) {
@@ -214,19 +215,19 @@ class _MoviesScreenState extends State<MoviesScreen> {
         if (screenWidth > 1200) {
           crossAxisCount = 5;
           aspectRatio = 0.6;
-          horizontalPadding = 24;
+          horizontalPadding = AppSpacing.xxl;
         } else if (screenWidth > 900) {
           crossAxisCount = 4;
           aspectRatio = 0.6;
-          horizontalPadding = 24;
+          horizontalPadding = AppSpacing.xxl;
         } else if (screenWidth > 600) {
           crossAxisCount = 3;
           aspectRatio = 0.58;
-          horizontalPadding = 20;
+          horizontalPadding = AppSpacing.screenPadding;
         } else {
           crossAxisCount = 2;
           aspectRatio = 0.58;
-          horizontalPadding = 16;
+          horizontalPadding = AppSpacing.lg;
         }
 
         return RefreshIndicator(
@@ -237,19 +238,19 @@ class _MoviesScreenState extends State<MoviesScreen> {
           child: GridView.builder(
             controller: _scrollController,
             padding: EdgeInsets.fromLTRB(
-                horizontalPadding, 8, horizontalPadding, 100),
+                horizontalPadding, AppSpacing.sm, horizontalPadding, 100),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: crossAxisCount,
               childAspectRatio: aspectRatio,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
+              crossAxisSpacing: AppSpacing.lg,
+              mainAxisSpacing: AppSpacing.lg,
             ),
             itemCount: movies.length + (isLoading ? 2 : 0),
             itemBuilder: (context, index) {
               if (index >= movies.length) {
                 return const Center(
                   child: Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(AppSpacing.lg),
                     child: CircularProgressIndicator(
                       color: AppColors.primary,
                       strokeWidth: 2,

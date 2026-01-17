@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/spacing_constants.dart';
 import '../../../core/models/movie.dart';
 import '../providers/favourites_provider.dart';
 import '../../watchlist/providers/watchlist_provider.dart';
@@ -32,7 +33,7 @@ class FavouritesScreen extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+                padding: EdgeInsets.fromLTRB(AppSpacing.screenPadding, AppSpacing.lg, AppSpacing.screenPadding, AppSpacing.sm),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -42,18 +43,18 @@ class FavouritesScreen extends StatelessWidget {
                         Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(AppSpacing.sm),
                               decoration: BoxDecoration(
                                 color: AppColors.error.withOpacity(0.15),
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(AppRadius.sm),
                               ),
                               child: const Icon(
                                 Icons.favorite_rounded,
                                 color: AppColors.error,
-                                size: 24,
+                                size: AppIconSize.lg,
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            const SizedBox(width: AppSpacing.md),
                             Text(
                               'Favourites',
                               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -62,7 +63,7 @@ class FavouritesScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: AppSpacing.xs),
                         Consumer<FavouritesProvider>(
                           builder: (context, provider, _) {
                             return Text(
@@ -77,7 +78,7 @@ class FavouritesScreen extends StatelessWidget {
                 ),
               ),
               
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               
               Expanded(
                 child: Consumer<FavouritesProvider>(
@@ -107,7 +108,7 @@ class FavouritesScreen extends StatelessWidget {
 
   Widget _buildFavouritesList(BuildContext context, List<Movie> movies) {
     return ListView.builder(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
+      padding: EdgeInsets.fromLTRB(AppSpacing.lg, 0, AppSpacing.lg, 100),
       itemCount: movies.length,
       itemBuilder: (context, index) {
         final movie = movies[index];
@@ -133,16 +134,16 @@ class FavouritesScreen extends StatelessWidget {
               },
               background: Container(
                 alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(right: 20),
-                margin: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.only(right: AppSpacing.xl),
+                margin: const EdgeInsets.only(bottom: AppSpacing.md),
                 decoration: BoxDecoration(
                   color: AppColors.error.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(AppRadius.md),
                 ),
                 child: const Icon(
                   Icons.delete_outline_rounded,
                   color: AppColors.error,
-                  size: 28,
+                  size: AppIconSize.xl,
                 ),
               ),
               child: MovieListTile(

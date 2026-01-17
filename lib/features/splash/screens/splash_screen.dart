@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/spacing_constants.dart';
 import '../../movies/providers/movie_provider.dart';
 import '../../favourites/providers/favourites_provider.dart';
 import '../../watchlist/providers/watchlist_provider.dart';
@@ -149,7 +150,7 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       ),
                       
-                      const SizedBox(height: 32),
+                      const SizedBox(height: AppSpacing.huge),
                       
                       Transform.translate(
                         offset: Offset(0, _slideAnimation.value),
@@ -164,14 +165,12 @@ class _SplashScreenState extends State<SplashScreen>
                                     AppColors.accent,
                                   ],
                                 ).createShader(bounds),
-                                child: const Text(
+                                child: Text(
                                   'CINEMAHUB',
-                                  style: TextStyle(
-                                    fontSize: 32,
+                                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                     letterSpacing: 4,
-                                    fontFamily: 'Poppins',
                                   ),
                                 ),
                               ),

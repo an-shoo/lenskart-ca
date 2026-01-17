@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/spacing_constants.dart';
 import '../../../core/models/movie.dart';
 import '../../../core/services/notification_service.dart';
 import '../../movies/providers/movie_provider.dart';
@@ -75,7 +76,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
 
   void _handlePlayNow() async {
     await NotificationService.showMoviePlayingNotification(widget.movie.title);
-    
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -94,7 +95,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
           backgroundColor: AppColors.surface,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
           duration: const Duration(seconds: 3),
         ),
@@ -114,11 +115,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                   gradient: AppColors.backgroundGradient,
                 ),
               ),
-              
               CustomScrollView(
                 slivers: [
                   _buildSliverAppBar(),
-                  
                   SliverToBoxAdapter(
                     child: AnimatedBuilder(
                       animation: _animationController,
@@ -146,21 +145,20 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final isWeb = screenWidth > 600;
-    
+
     // Responsive height: taller on web/tablet, standard on mobile
-    final expandedHeight = isWeb 
-        ? (screenHeight * 0.4).clamp(350.0, 500.0)
-        : 300.0;
-    
+    final expandedHeight =
+        isWeb ? (screenHeight * 0.4).clamp(350.0, 500.0) : 300.0;
+
     return SliverAppBar(
       expandedHeight: expandedHeight,
       pinned: true,
       backgroundColor: AppColors.background,
       leading: Container(
-        margin: const EdgeInsets.all(8),
+        margin: const EdgeInsets.all(AppSpacing.sm),
         decoration: BoxDecoration(
           color: Colors.black.withOpacity(0.4),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
         ),
         child: IconButton(
           icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
@@ -205,7 +203,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                           ? AppColors.accent
                           : Colors.white,
                     ),
-                    onPressed: () => watchProvider.toggleWatchlist(widget.movie),
+                    onPressed: () =>
+                        watchProvider.toggleWatchlist(widget.movie),
                   ),
                 ),
               ],
@@ -215,9 +214,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
       ],
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
-        fit: StackFit.expand,
-        children: [
-          if (widget.movie.backdropUrl.isNotEmpty)
+          fit: StackFit.expand,
+          children: [
+            if (widget.movie.backdropUrl.isNotEmpty)
               Image.network(
                 widget.movie.backdropUrl,
                 fit: isWeb ? BoxFit.fitWidth : BoxFit.cover,
@@ -244,7 +243,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
               )
             else
               Container(color: AppColors.surface),
-            
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -268,17 +266,17 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
 
   Widget _buildContent(MovieProvider provider) {
     final detail = provider.selectedMovieDetail;
-    
+
     if (provider.detailState == LoadingState.loading) {
       return const Padding(
-        padding: EdgeInsets.all(40),
+        padding: EdgeInsets.all(AppSpacing.huge + 8),
         child: LoadingWidget(message: 'Loading details...'),
       );
     }
     
     if (provider.detailState == LoadingState.error) {
       return Padding(
-        padding: const EdgeInsets.all(40),
+        padding: const EdgeInsets.all(AppSpacing.huge + 8),
         child: CustomErrorWidget(
           message: provider.detailErrorMessage,
           onRetry: _loadMovieDetails,
@@ -287,13 +285,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
     }
 
     final screenWidth = MediaQuery.of(context).size.width;
-    final ratingSize = screenWidth > 600 
-        ? 100.0
-        : screenWidth * 0.18;
+    final ratingSize = screenWidth > 600 ? 100.0 : screenWidth * 0.18;
     final clampedRatingSize = ratingSize.clamp(70.0, 120.0);
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+      padding: EdgeInsets.fromLTRB(AppSpacing.screenPadding, AppSpacing.xxl, AppSpacing.screenPadding, AppSpacing.huge + 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -306,45 +302,44 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                   children: [
                     Text(
                       widget.movie.title,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     if (widget.movie.releaseYear.isNotEmpty)
                       Text(
                         widget.movie.releaseYear,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+                              color: AppColors.textSecondary,
+                            ),
                       ),
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: AppSpacing.lg),
               CircularRatingWidget(
                 rating: widget.movie.ratingPercentage,
                 size: clampedRatingSize,
               ),
             ],
           ),
-          
-          const SizedBox(height: 24),
-          
+          const SizedBox(height: AppSpacing.xxl),
           if (detail != null && detail.genres.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildSectionTitle('Genre'),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
+                  spacing: AppSpacing.sm + 2,
+                  runSpacing: AppSpacing.sm + 2,
                   children: detail.genres.map((genre) {
                     return Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 10,
+                        horizontal: AppSpacing.lg,
+                        vertical: AppSpacing.sm + 2,
                       ),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -353,7 +348,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                             AppColors.primaryDark.withOpacity(0.2),
                           ],
                         ),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(AppRadius.lg),
                         border: Border.all(
                           color: AppColors.primary.withOpacity(0.4),
                           width: 1,
@@ -361,99 +356,94 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                       ),
                       child: Text(
                         genre.name,
-                        style: const TextStyle(
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppColors.primaryLight,
-                          fontSize: 13,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Poppins',
                         ),
                       ),
                     );
                   }).toList(),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.xxl),
               ],
             ),
-          
           _buildSectionTitle('Release Date'),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(AppSpacing.sm + 2),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
                 child: const Icon(
                   Icons.calendar_today_rounded,
                   color: AppColors.primary,
-                  size: 20,
+                  size: AppIconSize.md,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.md),
               Text(
-                detail?.formattedReleaseDate ?? widget.movie.formattedReleaseDate,
+                detail?.formattedReleaseDate ??
+                    widget.movie.formattedReleaseDate,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),
-          
-          const SizedBox(height: 24),
-          
+          const SizedBox(height: AppSpacing.xxl),
           if (detail != null && detail.runtime != null)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildSectionTitle('Runtime'),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(AppSpacing.sm + 2),
                       decoration: BoxDecoration(
                         color: AppColors.surface,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
                       ),
                       child: const Icon(
                         Icons.access_time_rounded,
                         color: AppColors.accent,
-                        size: 20,
+                        size: AppIconSize.md,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: AppSpacing.md),
                     Text(
                       detail.formattedRuntime,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.xxl),
               ],
             ),
-          
           _buildSectionTitle('Overview'),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.lg),
             decoration: BoxDecoration(
               color: AppColors.surface.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(AppRadius.md),
               border: Border.all(
                 color: AppColors.surfaceLight.withOpacity(0.2),
               ),
             ),
             child: Text(
-              detail?.overview ?? widget.movie.overview ?? 'No overview available.',
+              detail?.overview ??
+                  widget.movie.overview ??
+                  'No overview available.',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                height: 1.6,
-                color: AppColors.textSecondary,
-              ),
+                    height: 1.6,
+                    color: AppColors.textSecondary,
+                  ),
             ),
           ),
-          
-          const SizedBox(height: 32),
-          
+          const SizedBox(height: AppSpacing.huge),
           SizedBox(
             width: double.infinity,
             height: 56,
@@ -465,29 +455,26 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                 elevation: 8,
                 shadowColor: AppColors.primary.withOpacity(0.5),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(AppRadius.md),
                 ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.play_circle_filled, size: 28),
-                  SizedBox(width: 12),
+                children: [
+                  const Icon(Icons.play_circle_filled, size: AppIconSize.xl),
+                  const SizedBox(width: AppSpacing.md),
                   Text(
                     'Play Now',
-                    style: TextStyle(
-                      fontSize: 18,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                       letterSpacing: 0.5,
-                      fontFamily: 'Poppins',
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.xl),
         ],
       ),
     );
@@ -497,11 +484,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
     return Text(
       title,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        fontWeight: FontWeight.w600,
-        color: AppColors.textMuted,
-        letterSpacing: 0.5,
-      ),
+            fontWeight: FontWeight.w600,
+            color: AppColors.textMuted,
+            letterSpacing: 0.5,
+          ),
     );
   }
 }
-

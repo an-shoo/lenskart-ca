@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/spacing_constants.dart';
 import '../../../core/models/movie.dart';
 import '../../../core/models/genre.dart';
 
@@ -27,7 +28,7 @@ class MovieCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(AppRadius.lg),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.3),
@@ -37,7 +38,7 @@ class MovieCard extends StatelessWidget {
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(AppRadius.lg),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -60,9 +61,9 @@ class MovieCard extends StatelessWidget {
               ),
               
               Positioned(
-                left: 12,
-                right: 12,
-                bottom: 12,
+                left: AppSpacing.md,
+                right: AppSpacing.md,
+                bottom: AppSpacing.md,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -71,29 +72,27 @@ class MovieCard extends StatelessWidget {
                       movie.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.white,
-                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         height: 1.2,
-                        fontFamily: 'Poppins',
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: AppSpacing.xs + 2),
                     
                     if (movie.genreIds.isNotEmpty)
                       Wrap(
-                        spacing: 4,
-                        runSpacing: 4,
+                        spacing: AppSpacing.xs,
+                        runSpacing: AppSpacing.xs,
                         children: movie.genreIds.take(2).map((id) {
                           return Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
+                              horizontal: AppSpacing.sm,
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
                               color: AppColors.primary.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(AppRadius.xs),
                               border: Border.all(
                                 color: AppColors.primary.withOpacity(0.4),
                                 width: 1,
@@ -101,28 +100,26 @@ class MovieCard extends StatelessWidget {
                             ),
                             child: Text(
                               GenreMap.getGenreName(id),
-                              style: const TextStyle(
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: AppColors.primaryLight,
-                                fontSize: 10,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Poppins',
                               ),
                             ),
                           );
                         }).toList(),
                       ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     
                     Row(
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
+                            horizontal: AppSpacing.sm,
+                            vertical: AppSpacing.xs,
                           ),
                           decoration: BoxDecoration(
                             color: _getRatingColor(movie.voteAverage),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(AppRadius.xs),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -130,16 +127,14 @@ class MovieCard extends StatelessWidget {
                               const Icon(
                                 Icons.star_rounded,
                                 color: Colors.white,
-                                size: 12,
+                                size: AppIconSize.xs,
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: AppSpacing.xs),
                               Text(
                                 movie.voteAverage.toStringAsFixed(1),
-                                style: const TextStyle(
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   color: Colors.white,
-                                  fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  fontFamily: 'Poppins',
                                 ),
                               ),
                             ],
@@ -153,7 +148,7 @@ class MovieCard extends StatelessWidget {
                           color: isFavourite ? AppColors.error : Colors.white70,
                           onTap: onFavouriteTap,
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: AppSpacing.sm),
                         _ActionButton(
                           icon: isInWatchlist
                               ? Icons.bookmark_rounded
@@ -169,24 +164,22 @@ class MovieCard extends StatelessWidget {
               
               if (movie.releaseYear.isNotEmpty)
                 Positioned(
-                  top: 12,
-                  left: 12,
+                  top: AppSpacing.md,
+                  left: AppSpacing.md,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
+                      horizontal: AppSpacing.sm + 2,
                       vertical: 5,
                     ),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
                     child: Text(
                       movie.releaseYear,
-                      style: const TextStyle(
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Colors.white,
-                        fontSize: 11,
                         fontWeight: FontWeight.w600,
-                        fontFamily: 'Poppins',
                       ),
                     ),
                   ),
@@ -205,7 +198,7 @@ class MovieCard extends StatelessWidget {
         child: const Center(
           child: Icon(
             Icons.movie_outlined,
-            size: 60,
+            size: AppIconSize.huge,
             color: AppColors.textMuted,
           ),
         ),
@@ -232,7 +225,7 @@ class MovieCard extends StatelessWidget {
         child: const Center(
           child: Icon(
             Icons.broken_image_outlined,
-            size: 60,
+            size: AppIconSize.huge,
             color: AppColors.textMuted,
           ),
         ),
@@ -266,12 +259,12 @@ class _ActionButton extends StatelessWidget {
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
           color: Colors.black.withOpacity(0.4),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AppRadius.xs),
         ),
         child: Icon(
           icon,
           color: color,
-          size: 18,
+          size: AppIconSize.sm + 2,
         ),
       ),
     );

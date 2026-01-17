@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/constants/spacing_constants.dart';
 
 class EmptyWidget extends StatelessWidget {
   final IconData icon;
@@ -19,12 +20,12 @@ class EmptyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(AppSpacing.huge),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(28),
+              padding: const EdgeInsets.all(AppSpacing.xxxl),
               decoration: BoxDecoration(
                 color: AppColors.surface,
                 shape: BoxShape.circle,
@@ -38,11 +39,11 @@ class EmptyWidget extends StatelessWidget {
               ),
               child: Icon(
                 icon,
-                size: 60,
+                size: AppIconSize.huge,
                 color: AppColors.textMuted,
               ),
             ),
-            const SizedBox(height: 28),
+            const SizedBox(height: AppSpacing.xxxl),
             Text(
               title,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -50,7 +51,7 @@ class EmptyWidget extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Text(
               subtitle,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -59,7 +60,7 @@ class EmptyWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             if (action != null) ...[
-              const SizedBox(height: 32),
+              const SizedBox(height: AppSpacing.huge),
               action!,
             ],
           ],

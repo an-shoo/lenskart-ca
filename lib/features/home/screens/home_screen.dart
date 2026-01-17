@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/spacing_constants.dart';
 import '../../movies/screens/movies_screen.dart';
 import '../../favourites/screens/favourites_screen.dart';
 import '../../watchlist/screens/watchlist_screen.dart';
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SafeArea(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
                 child: Align(
                   alignment: Alignment.center,
                   child: LayoutBuilder(
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         constraints: BoxConstraints(maxWidth: maxWidth),
                         decoration: BoxDecoration(
                           color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(28),
+                          borderRadius: BorderRadius.circular(AppRadius.xxl),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.25),
@@ -61,28 +62,33 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 8),
+                              horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              _buildNavItem(
-                                index: 0,
-                                icon: Icons.movie_outlined,
-                                activeIcon: Icons.movie_rounded,
-                                label: 'Movies',
+                              Flexible(
+                                child: _buildNavItem(
+                                  index: 0,
+                                  icon: Icons.movie_outlined,
+                                  activeIcon: Icons.movie_rounded,
+                                  label: 'Movies',
+                                ),
                               ),
-                              _buildNavItem(
-                                index: 1,
-                                icon: Icons.favorite_outline_rounded,
-                                activeIcon: Icons.favorite_rounded,
-                                label: 'Favourites',
+                              Flexible(
+                                child: _buildNavItem(
+                                  index: 1,
+                                  icon: Icons.favorite_outline_rounded,
+                                  activeIcon: Icons.favorite_rounded,
+                                  label: 'Favourites',
+                                ),
                               ),
-                              _buildNavItem(
-                                index: 2,
-                                icon: Icons.bookmark_outline_rounded,
-                                activeIcon: Icons.bookmark_rounded,
-                                label: 'Watchlist',
+                              Flexible(
+                                child: _buildNavItem(
+                                  index: 2,
+                                  icon: Icons.bookmark_outline_rounded,
+                                  activeIcon: Icons.bookmark_rounded,
+                                  label: 'Watchlist',
+                                ),
                               ),
                             ],
                           ),
@@ -116,15 +122,16 @@ class _HomeScreenState extends State<HomeScreen> {
       behavior: HitTestBehavior.opaque,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary.withOpacity(0.12)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
@@ -132,13 +139,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected ? activeIcon : icon,
                 key: ValueKey(isSelected),
                 color: isSelected ? AppColors.primary : AppColors.textMuted,
-                size: 22,
+                size: AppIconSize.md - 2,
               ),
             ),
             const SizedBox(height: 3),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
-              style: TextStyle(
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: isSelected ? AppColors.primary : AppColors.textMuted,
+              ) ?? TextStyle(
                 fontSize: 11,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected ? AppColors.primary : AppColors.textMuted,
