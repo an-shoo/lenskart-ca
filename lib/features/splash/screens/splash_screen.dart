@@ -24,7 +24,10 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _setupAnimations();
-    _initializeApp();
+    // Defer initialization until after build to avoid setState during build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeApp();
+    });
   }
 
   void _setupAnimations() {
@@ -176,19 +179,19 @@ class _SplashScreenState extends State<SplashScreen>
                                   ],
                                 ).createShader(bounds),
                                 child: const Text(
-                                  'LENSKART',
+                                  'MOVIE BROWSING',
                                   style: TextStyle(
-                                    fontSize: 36,
+                                    fontSize: 32,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    letterSpacing: 8,
+                                    letterSpacing: 4,
                                     fontFamily: 'Poppins',
                                   ),
                                 ),
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'MOVIES',
+                                'APP',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,

@@ -30,6 +30,8 @@ class _MoviesScreenState extends State<MoviesScreen> {
   }
 
   void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
       final provider = context.read<MovieProvider>();

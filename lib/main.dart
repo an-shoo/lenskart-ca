@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => WatchlistProvider()),
       ],
       child: MaterialApp(
-        title: 'Lenskart Movies',
+        title: 'Movie Browsing App',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkTheme,
         home: const SplashScreen(),

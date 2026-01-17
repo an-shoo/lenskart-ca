@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../../../core/models/movie.dart';
 import '../../../core/models/movie_detail.dart';
@@ -28,6 +29,7 @@ class MovieProvider extends ChangeNotifier {
   // Search
   String _searchQuery = '';
   bool _isSearching = false;
+  Timer? _searchDebounceTimer;
 
   // Pagination
   int _currentPage = 1;
@@ -97,9 +99,12 @@ class MovieProvider extends ChangeNotifier {
     await loadPopularMovies();
   }
 
-  // Search movies
-  Future<void> searchMovies(String query) async {
+  // Search movies with debounce
+  void searchMovies(String query) {
     _searchQuery = query;
+    
+    // Cancel previous timer
+    _searchDebounceTimer?.cancel();
     
     if (query.isEmpty) {
       _isSearching = false;
@@ -109,6 +114,14 @@ class MovieProvider extends ChangeNotifier {
       return;
     }
 
+    // Debounce: wait 500ms before making API call
+    _searchDebounceTimer = Timer(const Duration(milliseconds: 500), () {
+      _performSearch(query);
+    });
+  }
+
+  // Perform the actual search
+  Future<void> _performSearch(String query) async {
     _isSearching = true;
     _searchState = LoadingState.loading;
     notifyListeners();
@@ -130,11 +143,18 @@ class MovieProvider extends ChangeNotifier {
 
   // Clear search
   void clearSearch() {
+    _searchDebounceTimer?.cancel();
     _searchQuery = '';
     _isSearching = false;
     _searchResults = [];
     _searchState = LoadingState.initial;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _searchDebounceTimer?.cancel();
+    super.dispose();
   }
 
   // Load movie details
