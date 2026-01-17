@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/models/movie.dart';
@@ -14,7 +15,7 @@ class FavouritesScreen extends StatelessWidget {
 
   void _navigateToDetail(BuildContext context, Movie movie) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => MovieDetailScreen(movie: movie),
       ),
     );

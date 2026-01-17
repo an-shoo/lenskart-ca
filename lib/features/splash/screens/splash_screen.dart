@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../movies/providers/movie_provider.dart';
@@ -73,16 +74,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (mounted) {
       Navigator.of(context).pushReplacement(
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const HomeScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-          transitionDuration: const Duration(milliseconds: 500),
+        CupertinoPageRoute(
+          builder: (context) => const HomeScreen(),
         ),
       );
     }
@@ -103,9 +96,9 @@ class _SplashScreenState extends State<SplashScreen>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF0D1B2A),
-              Color(0xFF1B263B),
-              Color(0xFF0D1B2A),
+              Color(0xFF1A0B2E),
+              Color(0xFF2D1B3D),
+              Color(0xFF1A0B2E),
             ],
             stops: [0.0, 0.5, 1.0],
           ),

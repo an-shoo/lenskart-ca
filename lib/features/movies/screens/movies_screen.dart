@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/models/movie.dart';
@@ -50,7 +51,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
   void _navigateToDetail(Movie movie) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => MovieDetailScreen(movie: movie),
       ),
     );

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Primary palette - Deep Cinema Teal
-  static const Color primary = Color(0xFF00B4D8);
-  static const Color primaryDark = Color(0xFF0077B6);
-  static const Color primaryLight = Color(0xFF90E0EF);
+  // Primary palette - Amethyst Purple
+  static const Color primary = Color(0xFF9B59B6);
+  static const Color primaryDark = Color(0xFF7D3C98);
+  static const Color primaryLight = Color(0xFFBB8FCE);
   
-  // Accent - Electric Gold
-  static const Color accent = Color(0xFFFFB703);
-  static const Color accentDark = Color(0xFFFB8500);
+  // Accent - Soft Rose Pink
+  static const Color accent = Color(0xFFE8B4CB);
+  static const Color accentDark = Color(0xFFD48FB8);
   
   // Background colors
-  static const Color background = Color(0xFF0D1B2A);
-  static const Color surface = Color(0xFF1B263B);
-  static const Color surfaceLight = Color(0xFF415A77);
+  static const Color background = Color(0xFF1A0B2E);
+  static const Color surface = Color(0xFF2D1B3D);
+  static const Color surfaceLight = Color(0xFF4A2C5A);
   
   // Text colors
   static const Color textPrimary = Color(0xFFE0E1DD);
@@ -21,13 +21,13 @@ class AppColors {
   static const Color textMuted = Color(0xFF415A77);
   
   // Status colors
-  static const Color success = Color(0xFF2EC4B6);
+  static const Color success = Color(0xFFA8E6CF);
   static const Color error = Color(0xFFE63946);
-  static const Color warning = Color(0xFFFFB703);
+  static const Color warning = Color(0xFFE8B4CB);
   
   // Rating colors
-  static const Color ratingHigh = Color(0xFF2EC4B6);
-  static const Color ratingMedium = Color(0xFFFFB703);
+  static const Color ratingHigh = Color(0xFFA8E6CF);
+  static const Color ratingMedium = Color(0xFFE8B4CB);
   static const Color ratingLow = Color(0xFFE63946);
   
   // Gradients
@@ -38,13 +38,13 @@ class AppColors {
   );
   
   static const LinearGradient backgroundGradient = LinearGradient(
-    colors: [Color(0xFF0D1B2A), Color(0xFF1B263B)],
+    colors: [Color(0xFF1A0B2E), Color(0xFF2D1B3D)],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
   
   static const LinearGradient cardGradient = LinearGradient(
-    colors: [Color(0xFF1B263B), Color(0xFF0D1B2A)],
+    colors: [Color(0xFF2D1B3D), Color(0xFF1A0B2E)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

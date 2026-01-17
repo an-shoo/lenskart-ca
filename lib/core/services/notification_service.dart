@@ -40,7 +40,7 @@ class NotificationService {
       priority: Priority.high,
       showWhen: true,
       icon: '@mipmap/ic_launcher',
-      color: Color(0xFF00B4D8),
+      color: Color(0xFF9B59B6),
       enableLights: true,
       enableVibration: true,
     );
