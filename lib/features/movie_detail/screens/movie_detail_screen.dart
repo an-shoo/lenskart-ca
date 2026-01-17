@@ -32,7 +32,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   void initState() {
     super.initState();
     _setupAnimations();
-    _loadMovieDetails();
+    // Defer loading until after build to avoid setState during build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadMovieDetails();
+    });
   }
 
   void _setupAnimations() {
