@@ -128,28 +128,40 @@ lib/
 ## Screenshots
 
 ### Splash Screen
-![Splash Screen](screenshots/splash_screen.png)
-*Animated splash screen with CinemaHub branding*
+<p align="center">
+  <img src="screenshots/splash_screen.png" alt="Splash Screen" width="300"/>
+</p>
+<p align="center"><em>Animated splash screen with CinemaHub branding</em></p>
 
 ### Movies Page
-![Movies Page](screenshots/movies_page.png)
-*Main movies listing with search functionality and bottom navigation*
+<p align="center">
+  <img src="screenshots/movies_page.png" alt="Movies Page" width="300"/>
+</p>
+<p align="center"><em>Main movies listing with search functionality and bottom navigation</em></p>
 
 ### Movie Details Page
-![Movie Details](screenshots/movie_details.png)
-*Detailed movie information with banner, overview, genres, and circular rating indicator*
+<p align="center">
+  <img src="screenshots/movie_details.png" alt="Movie Details" width="300"/>
+</p>
+<p align="center"><em>Detailed movie information with banner, overview, genres, and circular rating indicator</em></p>
 
 ### Notification
-![Notification](screenshots/notification.png)
-*In-app notification triggered when "Play Now" button is pressed*
+<p align="center">
+  <img src="screenshots/notification.png" alt="Notification" width="300"/>
+</p>
+<p align="center"><em>In-app notification triggered when "Play Now" button is pressed</em></p>
 
 ### Favourites List
-![Favourites](screenshots/favourites.png)
-*Favourites list with swipe-to-delete functionality*
+<p align="center">
+  <img src="screenshots/favourites.png" alt="Favourites" width="300"/>
+</p>
+<p align="center"><em>Favourites list with swipe-to-delete functionality</em></p>
 
 ### Watchlist
-![Watchlist](screenshots/watchlist.png)
-*Watchlist screen showing saved movies to watch later*
+<p align="center">
+  <img src="screenshots/watchlist.png" alt="Watchlist" width="300"/>
+</p>
+<p align="center"><em>Watchlist screen showing saved movies to watch later</em></p>
 
 ## Submission Notes
 
