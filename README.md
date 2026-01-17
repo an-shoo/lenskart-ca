@@ -53,12 +53,17 @@ A Flutter movie application built for the Lenskart Mobile Development Assignment
 3. Request an API key (choose "Developer" option)
 4. Copy your API key
 
-5. Open `lib/core/constants/api_constants.dart`
-6. Replace `YOUR_TMDB_API_KEY` with your actual API key:
+5. Copy the example file to create your config:
+```bash
+cp lib/core/constants/api_constants.dart.example lib/core/constants/api_constants.dart
+```
 
+6. Open `lib/core/constants/api_constants.dart` and replace with your API key:
 ```dart
 static const String apiKey = 'your_actual_api_key_here';
 ```
+
+> ⚠️ **Note**: `api_constants.dart` is gitignored to protect your API key. Never commit it!
 
 ### Running the App
 
