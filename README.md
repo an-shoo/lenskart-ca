@@ -38,10 +38,13 @@ This application requires a TMDB API key to function. The `api_constants.dart` f
 **Setup Steps:**
 
 1. Get your free API key from [TMDB](https://www.themoviedb.org/settings/api)
-2. Copy the example file:
-   ```
-   Copy: lib/core/constants/api_constants.dart.example
-   To: lib/core/constants/api_constants.dart
+2. Copy the example file to create your configuration:
+   ```bash
+   # On Windows (PowerShell)
+   Copy-Item lib/core/constants/api_constants.dart.example lib/core/constants/api_constants.dart
+   
+   # On Linux/Mac
+   cp lib/core/constants/api_constants.dart.example lib/core/constants/api_constants.dart
    ```
 3. Open `lib/core/constants/api_constants.dart`
 4. Replace `YOUR_TMDB_API_KEY_HERE` with your actual API key:
@@ -64,7 +67,7 @@ This application requires a TMDB API key to function. The `api_constants.dart` f
 1. Clone the repository:
    ```bash
    git clone https://github.com/an-shoo/lenskart-ca.git
-   cd lenskart
+   cd lenskart-ca
    ```
 
 2. Install dependencies:
