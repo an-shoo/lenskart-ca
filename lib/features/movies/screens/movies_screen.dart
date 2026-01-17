@@ -32,7 +32,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
-    
+
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
       final provider = context.read<MovieProvider>();
@@ -65,72 +65,82 @@ class _MoviesScreenState extends State<MoviesScreen> {
           gradient: AppColors.backgroundGradient,
         ),
         child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final screenWidth = constraints.maxWidth;
+              final horizontalPadding = screenWidth > 600 ? 40.0 : 20.0;
+
+              return Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        horizontalPadding, 16, horizontalPadding, 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Discover',
-                              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Discover',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Find your next favorite movie',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Find your next favorite movie',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: AppColors.surface,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Icon(
+                                Icons.movie_filter_rounded,
+                                color: AppColors.primary,
+                                size: 28,
+                              ),
                             ),
                           ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: AppColors.surface,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: const Icon(
-                            Icons.movie_filter_rounded,
-                            color: AppColors.primary,
-                            size: 28,
-                          ),
+                        const SizedBox(height: 20),
+                        SearchBarWidget(
+                          controller: _searchController,
+                          onChanged: (query) {
+                            context.read<MovieProvider>().searchMovies(query);
+                          },
+                          onClear: () {
+                            _searchController.clear();
+                            context.read<MovieProvider>().clearSearch();
+                          },
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    SearchBarWidget(
-                      controller: _searchController,
-                      onChanged: (query) {
-                        context.read<MovieProvider>().searchMovies(query);
-                      },
-                      onClear: () {
-                        _searchController.clear();
-                        context.read<MovieProvider>().clearSearch();
+                  ),
+                  Expanded(
+                    child: Consumer<MovieProvider>(
+                      builder: (context, provider, child) {
+                        if (provider.isSearching) {
+                          return _buildSearchResults(provider);
+                        }
+                        return _buildMoviesList(provider);
                       },
                     ),
-                  ],
-                ),
-              ),
-              
-              Expanded(
-                child: Consumer<MovieProvider>(
-                  builder: (context, provider, child) {
-                    if (provider.isSearching) {
-                      return _buildSearchResults(provider);
-                    }
-                    return _buildMoviesList(provider);
-                  },
-                ),
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -144,7 +154,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
           return const LoadingWidget(message: 'Loading movies...');
         }
         return _buildMoviesGrid(provider.popularMovies, isLoading: true);
-      
+
       case LoadingState.error:
         if (provider.popularMovies.isEmpty) {
           return CustomErrorWidget(
@@ -153,14 +163,14 @@ class _MoviesScreenState extends State<MoviesScreen> {
           );
         }
         return _buildMoviesGrid(provider.popularMovies);
-      
+
       case LoadingState.empty:
         return const EmptyWidget(
           icon: Icons.movie_outlined,
           title: 'No Movies Found',
           subtitle: 'Check back later for new content',
         );
-      
+
       case LoadingState.loaded:
       case LoadingState.initial:
         return _buildMoviesGrid(provider.popularMovies);
@@ -171,72 +181,100 @@ class _MoviesScreenState extends State<MoviesScreen> {
     switch (provider.searchState) {
       case LoadingState.loading:
         return const LoadingWidget(message: 'Searching...');
-      
+
       case LoadingState.error:
         return CustomErrorWidget(
           message: provider.searchErrorMessage,
           onRetry: () => provider.searchMovies(provider.searchQuery),
         );
-      
+
       case LoadingState.empty:
         return EmptyWidget(
           icon: Icons.search_off_rounded,
           title: 'No Results',
           subtitle: 'No movies found for "${provider.searchQuery}"',
         );
-      
+
       case LoadingState.loaded:
         return _buildMoviesGrid(provider.searchResults);
-      
+
       case LoadingState.initial:
         return const SizedBox.shrink();
     }
   }
 
   Widget _buildMoviesGrid(List<Movie> movies, {bool isLoading = false}) {
-    return RefreshIndicator(
-      onRefresh: () => context.read<MovieProvider>().loadPopularMovies(refresh: true),
-      color: AppColors.primary,
-      backgroundColor: AppColors.surface,
-      child: GridView.builder(
-        controller: _scrollController,
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.58,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-        ),
-        itemCount: movies.length + (isLoading ? 2 : 0),
-        itemBuilder: (context, index) {
-          if (index >= movies.length) {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: CircularProgressIndicator(
-                  color: AppColors.primary,
-                  strokeWidth: 2,
-                ),
-              ),
-            );
-          }
-          
-          final movie = movies[index];
-          return Consumer2<FavouritesProvider, WatchlistProvider>(
-            builder: (context, favProvider, watchProvider, child) {
-              return MovieCard(
-                movie: movie,
-                isFavourite: favProvider.isFavourite(movie.id),
-                isInWatchlist: watchProvider.isInWatchlist(movie.id),
-                onTap: () => _navigateToDetail(movie),
-                onFavouriteTap: () => favProvider.toggleFavourite(movie),
-                onWatchlistTap: () => watchProvider.toggleWatchlist(movie),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenWidth = constraints.maxWidth;
+        int crossAxisCount;
+        double aspectRatio;
+        double horizontalPadding;
+
+        if (screenWidth > 1200) {
+          crossAxisCount = 5;
+          aspectRatio = 0.6;
+          horizontalPadding = 24;
+        } else if (screenWidth > 900) {
+          crossAxisCount = 4;
+          aspectRatio = 0.6;
+          horizontalPadding = 24;
+        } else if (screenWidth > 600) {
+          crossAxisCount = 3;
+          aspectRatio = 0.58;
+          horizontalPadding = 20;
+        } else {
+          crossAxisCount = 2;
+          aspectRatio = 0.58;
+          horizontalPadding = 16;
+        }
+
+        return RefreshIndicator(
+          onRefresh: () =>
+              context.read<MovieProvider>().loadPopularMovies(refresh: true),
+          color: AppColors.primary,
+          backgroundColor: AppColors.surface,
+          child: GridView.builder(
+            controller: _scrollController,
+            padding: EdgeInsets.fromLTRB(
+                horizontalPadding, 8, horizontalPadding, 100),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              childAspectRatio: aspectRatio,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+            ),
+            itemCount: movies.length + (isLoading ? 2 : 0),
+            itemBuilder: (context, index) {
+              if (index >= movies.length) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: CircularProgressIndicator(
+                      color: AppColors.primary,
+                      strokeWidth: 2,
+                    ),
+                  ),
+                );
+              }
+
+              final movie = movies[index];
+              return Consumer2<FavouritesProvider, WatchlistProvider>(
+                builder: (context, favProvider, watchProvider, child) {
+                  return MovieCard(
+                    movie: movie,
+                    isFavourite: favProvider.isFavourite(movie.id),
+                    isInWatchlist: watchProvider.isInWatchlist(movie.id),
+                    onTap: () => _navigateToDetail(movie),
+                    onFavouriteTap: () => favProvider.toggleFavourite(movie),
+                    onWatchlistTap: () => watchProvider.toggleWatchlist(movie),
+                  );
+                },
               );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
-

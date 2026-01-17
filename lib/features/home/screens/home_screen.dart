@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  
+
   final List<Widget> _screens = const [
     MoviesScreen(),
     FavouritesScreen(),
@@ -23,49 +23,78 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(
-                  index: 0,
-                  icon: Icons.movie_outlined,
-                  activeIcon: Icons.movie_rounded,
-                  label: 'Movies',
+      body: Stack(
+        children: [
+          IndexedStack(
+            index: _currentIndex,
+            children: _screens,
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final screenWidth = constraints.maxWidth;
+                      final maxWidth =
+                          screenWidth > 600 ? 500.0 : screenWidth * 0.85;
+
+                      return Container(
+                        constraints: BoxConstraints(maxWidth: maxWidth),
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          borderRadius: BorderRadius.circular(28),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.25),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                              spreadRadius: 0,
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _buildNavItem(
+                                index: 0,
+                                icon: Icons.movie_outlined,
+                                activeIcon: Icons.movie_rounded,
+                                label: 'Movies',
+                              ),
+                              _buildNavItem(
+                                index: 1,
+                                icon: Icons.favorite_outline_rounded,
+                                activeIcon: Icons.favorite_rounded,
+                                label: 'Favourites',
+                              ),
+                              _buildNavItem(
+                                index: 2,
+                                icon: Icons.bookmark_outline_rounded,
+                                activeIcon: Icons.bookmark_rounded,
+                                label: 'Watchlist',
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
-                _buildNavItem(
-                  index: 1,
-                  icon: Icons.favorite_outline_rounded,
-                  activeIcon: Icons.favorite_rounded,
-                  label: 'Favourites',
-                ),
-                _buildNavItem(
-                  index: 2,
-                  icon: Icons.bookmark_outline_rounded,
-                  activeIcon: Icons.bookmark_rounded,
-                  label: 'Watchlist',
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -77,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required String label,
   }) {
     final isSelected = _currentIndex == index;
-    
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -87,12 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
       behavior: HitTestBehavior.opaque,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected 
-              ? AppColors.primary.withOpacity(0.15) 
+          color: isSelected
+              ? AppColors.primary.withOpacity(0.12)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -103,15 +132,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 isSelected ? activeIcon : icon,
                 key: ValueKey(isSelected),
                 color: isSelected ? AppColors.primary : AppColors.textMuted,
-                size: 26,
+                size: 22,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 3),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: TextStyle(
-                fontSize: 12,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                fontSize: 11,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected ? AppColors.primary : AppColors.textMuted,
                 fontFamily: 'Poppins',
               ),
@@ -123,4 +152,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
