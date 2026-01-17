@@ -35,9 +35,11 @@
 
 This application requires a TMDB API key to function. The `api_constants.dart` file containing the API key is intentionally not committed to version control.
 
+For API documentation, refer to: [TMDB API Documentation](https://developer.themoviedb.org/docs/getting-started)
+
 **Setup Steps:**
 
-1. Get your free API key from [TMDB](https://www.themoviedb.org/settings/api)
+1. Get your free API key from [TMDB Settings](https://www.themoviedb.org/settings/api). You need to sign up first to access this page and generate your API key.
 2. Copy the example file to create your configuration:
    ```bash
    # On Windows (PowerShell)
