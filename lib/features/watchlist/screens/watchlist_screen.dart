@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/constants/spacing_constants.dart';
+import '../../../core/utils/snackbar_helper.dart';
 import '../../../core/models/movie.dart';
 import '../providers/watchlist_provider.dart';
 import '../../favourites/providers/favourites_provider.dart';
@@ -119,17 +120,10 @@ class WatchlistScreen extends StatelessWidget {
               direction: DismissDirection.endToStart,
               onDismissed: (_) {
                 watchProvider.removeFromWatchlist(movie.id);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${movie.title} removed from watchlist'),
-                    action: SnackBarAction(
-                      label: 'Undo',
-                      textColor: AppColors.primary,
-                      onPressed: () {
-                        watchProvider.addToWatchlist(movie);
-                      },
-                    ),
-                  ),
+                SnackbarHelper.showRemoveSnackBarWithUndo(
+                  context,
+                  '${movie.title} removed from watchlist',
+                  () => watchProvider.addToWatchlist(movie),
                 );
               },
               background: Container(
@@ -151,8 +145,21 @@ class WatchlistScreen extends StatelessWidget {
                 isFavourite: favProvider.isFavourite(movie.id),
                 isInWatchlist: true,
                 onTap: () => _navigateToDetail(context, movie),
-                onFavouriteTap: () => favProvider.toggleFavourite(movie),
-                onWatchlistTap: () => watchProvider.toggleWatchlist(movie),
+                onFavouriteTap: () {
+                  final wasFavourite = favProvider.isFavourite(movie.id);
+                  favProvider.toggleFavourite(movie);
+                  SnackbarHelper.showAddSnackBar(
+                    context,
+                    wasFavourite ? 'Removed from favourites' : 'Added to favourites',
+                  );
+                },
+                onWatchlistTap: () {
+                  watchProvider.toggleWatchlist(movie);
+                  SnackbarHelper.showAddSnackBar(
+                    context,
+                    'Removed from watchlist',
+                  );
+                },
               ),
             );
           },

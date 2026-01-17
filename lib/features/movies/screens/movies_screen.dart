@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/constants/spacing_constants.dart';
+import '../../../core/utils/snackbar_helper.dart';
 import '../../../core/models/movie.dart';
 import '../providers/movie_provider.dart';
 import '../../favourites/providers/favourites_provider.dart';
@@ -267,8 +268,22 @@ class _MoviesScreenState extends State<MoviesScreen> {
                     isFavourite: favProvider.isFavourite(movie.id),
                     isInWatchlist: watchProvider.isInWatchlist(movie.id),
                     onTap: () => _navigateToDetail(movie),
-                    onFavouriteTap: () => favProvider.toggleFavourite(movie),
-                    onWatchlistTap: () => watchProvider.toggleWatchlist(movie),
+                    onFavouriteTap: () {
+                      final wasFavourite = favProvider.isFavourite(movie.id);
+                      favProvider.toggleFavourite(movie);
+                      SnackbarHelper.showAddSnackBar(
+                        context,
+                        wasFavourite ? 'Removed from favourites' : 'Added to favourites',
+                      );
+                    },
+                    onWatchlistTap: () {
+                      final wasInWatchlist = watchProvider.isInWatchlist(movie.id);
+                      watchProvider.toggleWatchlist(movie);
+                      SnackbarHelper.showAddSnackBar(
+                        context,
+                        wasInWatchlist ? 'Removed from watchlist' : 'Added to watchlist',
+                      );
+                    },
                   );
                 },
               );

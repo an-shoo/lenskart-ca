@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../theme/app_theme.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin _notifications =
@@ -40,7 +40,7 @@ class NotificationService {
       priority: Priority.high,
       showWhen: true,
       icon: '@mipmap/ic_launcher',
-      color: Color(0xFF9B59B6),
+      color: AppColors.primary,
       enableLights: true,
       enableVibration: true,
     );

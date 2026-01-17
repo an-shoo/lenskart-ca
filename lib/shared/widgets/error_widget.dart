@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/constants/spacing_constants.dart';
 
 class CustomErrorWidget extends StatelessWidget {
   final String message;
@@ -16,24 +17,24 @@ class CustomErrorWidget extends StatelessWidget {
     return Center(
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(AppSpacing.huge),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(AppSpacing.xxl),
                 decoration: BoxDecoration(
                   color: AppColors.error.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.error_outline_rounded,
-                  size: 60,
+                  size: AppIconSize.huge,
                   color: AppColors.error,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xxl),
               Text(
                 'Oops! Something went wrong',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -41,7 +42,7 @@ class CustomErrorWidget extends StatelessWidget {
                     ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Text(
                 message,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -50,7 +51,7 @@ class CustomErrorWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               if (onRetry != null) ...[
-                const SizedBox(height: 32),
+                const SizedBox(height: AppSpacing.huge),
                 ElevatedButton.icon(
                   onPressed: onRetry,
                   icon: const Icon(Icons.refresh_rounded),
@@ -59,8 +60,8 @@ class CustomErrorWidget extends StatelessWidget {
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 32,
-                      vertical: 16,
+                      horizontal: AppSpacing.huge,
+                      vertical: AppSpacing.lg,
                     ),
                   ),
                 ),

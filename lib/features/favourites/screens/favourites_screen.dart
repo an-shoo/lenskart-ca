@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/constants/spacing_constants.dart';
+import '../../../core/utils/snackbar_helper.dart';
 import '../../../core/models/movie.dart';
 import '../providers/favourites_provider.dart';
 import '../../watchlist/providers/watchlist_provider.dart';
@@ -119,17 +120,10 @@ class FavouritesScreen extends StatelessWidget {
               direction: DismissDirection.endToStart,
               onDismissed: (_) {
                 favProvider.removeFromFavourites(movie.id);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${movie.title} removed from favourites'),
-                    action: SnackBarAction(
-                      label: 'Undo',
-                      textColor: AppColors.primary,
-                      onPressed: () {
-                        favProvider.addToFavourites(movie);
-                      },
-                    ),
-                  ),
+                SnackbarHelper.showRemoveSnackBarWithUndo(
+                  context,
+                  '${movie.title} removed from favourites',
+                  () => favProvider.addToFavourites(movie),
                 );
               },
               background: Container(
@@ -151,8 +145,21 @@ class FavouritesScreen extends StatelessWidget {
                 isFavourite: true,
                 isInWatchlist: watchProvider.isInWatchlist(movie.id),
                 onTap: () => _navigateToDetail(context, movie),
-                onFavouriteTap: () => favProvider.toggleFavourite(movie),
-                onWatchlistTap: () => watchProvider.toggleWatchlist(movie),
+                onFavouriteTap: () {
+                  favProvider.toggleFavourite(movie);
+                  SnackbarHelper.showAddSnackBar(
+                    context,
+                    'Removed from favourites',
+                  );
+                },
+                onWatchlistTap: () {
+                  final wasInWatchlist = watchProvider.isInWatchlist(movie.id);
+                  watchProvider.toggleWatchlist(movie);
+                  SnackbarHelper.showAddSnackBar(
+                    context,
+                    wasInWatchlist ? 'Removed from watchlist' : 'Added to watchlist',
+                  );
+                },
               ),
             );
           },

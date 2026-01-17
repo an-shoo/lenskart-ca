@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/constants/spacing_constants.dart';
+import '../../../core/utils/snackbar_helper.dart';
 import '../../../core/models/movie.dart';
 import '../../../core/services/notification_service.dart';
 import '../../movies/providers/movie_provider.dart';
@@ -83,7 +84,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
           content: Row(
             children: [
               const Icon(Icons.play_circle_filled, color: AppColors.primary),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Text(
                   'Movie is Playing: ${widget.movie.title}',
@@ -145,8 +146,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final isWeb = screenWidth > 600;
-
-    // Responsive height: taller on web/tablet, standard on mobile
     final expandedHeight =
         isWeb ? (screenHeight * 0.4).clamp(350.0, 500.0) : 300.0;
 
@@ -168,43 +167,57 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
       actions: [
         Consumer2<FavouritesProvider, WatchlistProvider>(
           builder: (context, favProvider, watchProvider, _) {
+            final isFavourite = favProvider.isFavourite(widget.movie.id);
+            final isInWatchlist = watchProvider.isInWatchlist(widget.movie.id);
+            
             return Row(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(right: 8),
+                  margin: const EdgeInsets.only(right: AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
                   ),
                   child: IconButton(
                     icon: Icon(
-                      favProvider.isFavourite(widget.movie.id)
+                      isFavourite
                           ? Icons.favorite_rounded
                           : Icons.favorite_border_rounded,
-                      color: favProvider.isFavourite(widget.movie.id)
+                      color: isFavourite
                           ? AppColors.error
                           : Colors.white,
                     ),
-                    onPressed: () => favProvider.toggleFavourite(widget.movie),
+                    onPressed: () {
+                      favProvider.toggleFavourite(widget.movie);
+                      SnackbarHelper.showAddSnackBar(
+                        context,
+                        isFavourite ? 'Removed from favourites' : 'Added to favourites',
+                      );
+                    },
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(right: 8),
+                  margin: const EdgeInsets.only(right: AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
                   ),
                   child: IconButton(
                     icon: Icon(
-                      watchProvider.isInWatchlist(widget.movie.id)
+                      isInWatchlist
                           ? Icons.bookmark_rounded
                           : Icons.bookmark_border_rounded,
-                      color: watchProvider.isInWatchlist(widget.movie.id)
+                      color: isInWatchlist
                           ? AppColors.accent
                           : Colors.white,
                     ),
-                    onPressed: () =>
-                        watchProvider.toggleWatchlist(widget.movie),
+                    onPressed: () {
+                      watchProvider.toggleWatchlist(widget.movie);
+                      SnackbarHelper.showAddSnackBar(
+                        context,
+                        isInWatchlist ? 'Removed from watchlist' : 'Added to watchlist',
+                      );
+                    },
                   ),
                 ),
               ],
