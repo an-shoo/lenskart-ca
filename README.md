@@ -1,214 +1,129 @@
-# Lenskart Movies App
+# Movie Browsing App – Flutter (TMDB API)
 
-A Flutter movie application built for the Lenskart Mobile Development Assignment. This app integrates with TMDB (The Movie Database) API to provide a comprehensive movie browsing experience.
+## Project Overview
 
-## 📱 Features
+- Flutter application for browsing and discovering movies using The Movie Database (TMDB) API
+- Features include movie search, favourites management, watchlist functionality, and detailed movie information
+- Implements clean architecture with feature-based folder structure
+- Uses Provider for state management and local storage for user preferences
+- Includes comprehensive UI states (loading, empty, error) and responsive design
 
-### Core Features
-- **Splash Screen**: Animated splash screen with app branding
-- **Movies Screen**: Browse popular movies with search functionality
-- **Favourites Screen**: Manage your favorite movies
-- **Watchlist Screen**: Keep track of movies you want to watch later
-- **Movie Detail Screen**: View comprehensive movie information
+## Tech Stack
 
-### Movie Details Include
-- Movie Banner/Backdrop
-- Title and Year
-- Overview/Description
-- Release Date
-- Genre Tags
-- User Rating (Circular Progress Bar)
-- Play Now button with In-App Notification
+- Flutter (Dart) - SDK 3.0.0+
+- TMDB API - Movie data source
+- Provider (^6.1.1) - State management
+- HTTP (^1.1.0) - API requests
+- SharedPreferences (^2.2.2) - Local storage for favourites and watchlist
+- Flutter Local Notifications (^16.3.0) - In-app notifications
 
-### Additional Features
-- Search movies by title
-- Add/Remove movies from Favourites
-- Add/Remove movies from Watchlist
-- Pull-to-refresh on movie list
-- Infinite scroll pagination
-- Beautiful animations and transitions
-- Loading, Empty, and Error states
-- Responsive design for various screen sizes
+## Features
 
-## 🎨 Design
+- Splash screen with animated logo
+- Bottom navigation with three tabs: Movies, Favourites, Watchlist
+- Movie listing with posters, titles, genres, and ratings
+- Real-time movie search functionality
+- Movie details screen with banner, overview, release date, genres, and circular rating progress indicator
+- Add/remove movies to favourites and watchlist (persisted locally)
+- In-app notification triggered by "Play Now" button
+- Loading state with progress indicators
+- Empty state with helpful messages
+- Error state with retry functionality
+- Pull-to-refresh and infinite scroll pagination
 
-- **Theme**: Dark cinema theme with teal and gold accents
-- **Color Palette**:
-  - Primary: `#00B4D8` (Teal)
-  - Accent: `#FFB703` (Gold)
-  - Background: `#0D1B2A` (Dark Navy)
-  - Surface: `#1B263B` (Dark Blue)
+## API Key Setup (IMPORTANT)
 
-## 🔧 Setup Instructions
+This application requires a TMDB API key to function. The `api_constants.dart` file containing the API key is intentionally not committed to version control.
 
-### Prerequisites
-- Flutter SDK (3.0.0 or higher)
-- Android Studio / VS Code
-- Android SDK (for Android development)
+**Setup Steps:**
 
-### TMDB API Key Setup
+1. Get your free API key from [TMDB](https://www.themoviedb.org/settings/api)
+2. Copy the example file:
+   ```
+   Copy: lib/core/constants/api_constants.dart.example
+   To: lib/core/constants/api_constants.dart
+   ```
+3. Open `lib/core/constants/api_constants.dart`
+4. Replace `YOUR_TMDB_API_KEY_HERE` with your actual API key:
+   ```dart
+   static const String apiKey = 'your_actual_api_key_here';
+   ```
 
-1. Create an account at [TMDB](https://www.themoviedb.org/)
-2. Go to Settings → API
-3. Request an API key (choose "Developer" option)
-4. Copy your API key
+**File Path:** `lib/core/constants/api_constants.dart`
 
-5. Copy the example file to create your config:
-```bash
-cp lib/core/constants/api_constants.dart.example lib/core/constants/api_constants.dart
-```
+## How to Run the Project Locally
 
-6. Open `lib/core/constants/api_constants.dart` and replace with your API key:
-```dart
-static const String apiKey = 'your_actual_api_key_here';
-```
+**Prerequisites:**
+- Flutter SDK 3.0.0 or higher
+- Dart SDK
+- Android Studio / VS Code with Flutter extensions
+- Internet connection for API calls
 
-> ⚠️ **Note**: `api_constants.dart` is gitignored to protect your API key. Never commit it!
+**Steps:**
 
-### Running the App
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/an-shoo/lenskart-ca.git
+   cd lenskart
+   ```
 
-1. **Navigate to project directory**
-```bash
-cd C:\Abinash\lenskart
-```
+2. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
 
-2. **Create Flutter project structure** (generates android/ios/web folders)
-```bash
-flutter create .
-```
+3. Set up TMDB API key as described in the "API Key Setup" section above
 
-3. **Install dependencies**
-```bash
-flutter pub get
-```
+4. Run the application:
+   ```bash
+   flutter run
+   ```
 
-4. **Run the app**
-```bash
-flutter run
-```
+5. To build APK for Android:
+   ```bash
+   flutter build apk --release
+   ```
 
-### Building APK
-
-To generate a release APK:
-
-```bash
-flutter build apk --release
-```
-
-The APK will be available at `build/app/outputs/flutter-apk/app-release.apk`
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 lib/
-├── main.dart                           # App entry point
+├── main.dart                    # Application entry point
 ├── core/
-│   ├── constants/
-│   │   └── api_constants.dart          # API configuration
-│   ├── models/
-│   │   ├── movie.dart                  # Movie model
-│   │   ├── movie_detail.dart           # Movie detail model
-│   │   └── genre.dart                  # Genre model
-│   ├── services/
-│   │   ├── api_service.dart            # TMDB API service
-│   │   ├── notification_service.dart   # Local notifications
-│   │   └── storage_service.dart        # Local storage (SharedPreferences)
-│   └── theme/
-│       └── app_theme.dart              # App theming
+│   ├── constants/               # API configuration
+│   ├── models/                  # Data models (Movie, Genre, MovieDetail)
+│   ├── services/                # API service, storage, notifications
+│   └── theme/                   # App theming and colors
 ├── features/
-│   ├── splash/
-│   │   └── screens/
-│   │       └── splash_screen.dart
-│   ├── home/
-│   │   └── screens/
-│   │       └── home_screen.dart
-│   ├── movies/
-│   │   ├── providers/
-│   │   │   └── movie_provider.dart
-│   │   ├── screens/
-│   │   │   └── movies_screen.dart
-│   │   └── widgets/
-│   │       ├── movie_card.dart
-│   │       └── search_bar_widget.dart
-│   ├── favourites/
-│   │   ├── providers/
-│   │   │   └── favourites_provider.dart
-│   │   └── screens/
-│   │       └── favourites_screen.dart
-│   ├── watchlist/
-│   │   ├── providers/
-│   │   │   └── watchlist_provider.dart
-│   │   └── screens/
-│   │       └── watchlist_screen.dart
-│   └── movie_detail/
-│       ├── screens/
-│       │   └── movie_detail_screen.dart
-│       └── widgets/
-│           └── circular_rating_widget.dart
+│   ├── splash/                  # Splash screen
+│   ├── home/                    # Home screen with bottom navigation
+│   ├── movies/                  # Movies listing and search
+│   ├── favourites/              # Favourites management
+│   ├── watchlist/               # Watchlist management
+│   └── movie_detail/            # Movie details screen
 └── shared/
-    └── widgets/
-        ├── loading_widget.dart
-        ├── error_widget.dart
-        ├── empty_widget.dart
-        └── movie_list_tile.dart
+    └── widgets/                 # Reusable UI components
 ```
 
-## 📦 Dependencies
+## Assumptions & Notes
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| provider | ^6.1.1 | State management |
-| http | ^1.1.0 | HTTP requests |
-| shared_preferences | ^2.2.2 | Local storage |
-| cached_network_image | ^3.3.0 | Image caching |
-| flutter_local_notifications | ^16.3.0 | In-app notifications |
+- No user authentication is implemented - data is stored locally per device
+- Favourites and watchlist are unique to each device/user session
+- Application has been tested on Android platform
+- Internet connection is required for API calls and image loading
+- TMDB API key must be configured before running the application
+- The app uses Material Design 3 with a dark theme
 
-## 🔌 API Integration
+## States Handled
 
-This app uses the [TMDB API](https://developers.themoviedb.org/3) for movie data:
+- **Loading state**: Displayed when fetching data from API, includes progress indicators
+- **Empty state**: Shown when no movies are found (search results, favourites, watchlist)
+- **Error state**: Displayed on API failures or network errors, includes retry functionality
 
-- **Popular Movies**: `/movie/popular`
-- **Search Movies**: `/search/movie`
-- **Movie Details**: `/movie/{movie_id}`
-- **Genre List**: `/genre/movie/list`
+## Screenshots
 
-## 📱 Screenshots
+Screenshots can be added here
 
-The app includes:
-1. Splash screen with animated logo
-2. Movies grid with search functionality
-3. Favourites list with swipe-to-delete
-4. Watchlist with swipe-to-delete
-5. Detailed movie view with circular rating
+## Submission Notes
 
-## ✅ Requirements Checklist
-
-- [x] Splash Screen with dummy image
-- [x] Home Page with Bottom Navigation
-- [x] Movies screen with images, names, and genre cards
-- [x] Search functionality on Movies screen
-- [x] Mark movies as Favourites
-- [x] Mark movies as Watchlist
-- [x] Unique lists per user (local storage)
-- [x] Favourites screen
-- [x] Watchlist screen
-- [x] Movie Detail with Banner, Name, Overview, Release Date, Genre
-- [x] Circular Progress Bar for User Rating
-- [x] Play Now button with In-App Notification
-- [x] Clean folder structure
-- [x] Readable code
-- [x] Loading state
-- [x] Empty state
-- [x] Error state
-- [x] Responsive design
-- [x] Consistent typography and spacing
-- [x] Material Design
-
-## 👨‍💻 Author
-
-Created for Lenskart Mobile Development Assignment
-
-## 📄 License
-
-This project is for assessment purposes only.
-
+This project was developed as part of a technical assessment. The code is original and written by the candidate. The repository is structured for local execution and review. All features specified in the requirements have been implemented, including splash screen, bottom navigation, movie browsing with search, favourites/watchlist management, movie details with circular rating, and in-app notifications.
