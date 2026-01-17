@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => WatchlistProvider()),
       ],
       child: MaterialApp(
-        title: 'Movie Browsing App',
+        title: 'CinemaHub',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkTheme,
         home: const SplashScreen(),

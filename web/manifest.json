@@ -1,11 +1,11 @@
 {
-    "name": "lenskart",
-    "short_name": "lenskart",
+    "name": "CinemaHub",
+    "short_name": "CinemaHub",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "CinemaHub - A Flutter movie application with TMDB integration",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

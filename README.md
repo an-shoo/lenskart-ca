@@ -1,4 +1,4 @@
-# Movie Browsing App – Flutter (TMDB API)
+# CinemaHub – Flutter (TMDB API)
 
 ## Project Overview
 

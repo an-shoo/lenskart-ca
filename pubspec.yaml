@@ -1,5 +1,5 @@
-name: lenskart_movies
-description: A Flutter movie application with TMDB integration
+name: cinema_hub
+description: CinemaHub - A Flutter movie application with TMDB integration
 
 publish_to: 'none'
 

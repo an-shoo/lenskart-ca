@@ -165,7 +165,7 @@ class _SplashScreenState extends State<SplashScreen>
                                   ],
                                 ).createShader(bounds),
                                 child: const Text(
-                                  'MOVIE BROWSING',
+                                  'CINEMAHUB',
                                   style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
@@ -173,17 +173,6 @@ class _SplashScreenState extends State<SplashScreen>
                                     letterSpacing: 4,
                                     fontFamily: 'Poppins',
                                   ),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'APP',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.textSecondary,
-                                  letterSpacing: 12,
-                                  fontFamily: 'Poppins',
                                 ),
                               ),
                             ],
