@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
@@ -72,10 +73,3 @@ class NotificationService {
     );
   }
 }
-
-// Custom Color class for use in notification (since we can't import Flutter's Color)
-class Color {
-  final int value;
-  const Color(this.value);
-}
-

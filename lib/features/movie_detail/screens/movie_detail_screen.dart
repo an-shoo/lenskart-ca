@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/models/movie.dart';
 import '../../../core/services/notification_service.dart';
@@ -213,18 +212,21 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
           children: [
             // Backdrop image
             if (widget.movie.backdropUrl.isNotEmpty)
-              CachedNetworkImage(
-                imageUrl: widget.movie.backdropUrl,
+              Image.network(
+                widget.movie.backdropUrl,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: AppColors.surface,
-                  child: const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primary,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    color: AppColors.surface,
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
                     ),
-                  ),
-                ),
-                errorWidget: (context, url, error) => Container(
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) => Container(
                   color: AppColors.surface,
                   child: const Icon(
                     Icons.broken_image,

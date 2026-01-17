@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/models/movie.dart';
 import '../../core/models/genre.dart';
@@ -186,19 +185,22 @@ class MovieListTile extends StatelessWidget {
       );
     }
 
-    return CachedNetworkImage(
-      imageUrl: movie.posterUrl,
+    return Image.network(
+      movie.posterUrl,
       fit: BoxFit.cover,
-      placeholder: (context, url) => Container(
-        color: AppColors.surfaceLight,
-        child: const Center(
-          child: CircularProgressIndicator(
-            color: AppColors.primary,
-            strokeWidth: 2,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return Container(
+          color: AppColors.surfaceLight,
+          child: const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.primary,
+              strokeWidth: 2,
+            ),
           ),
-        ),
-      ),
-      errorWidget: (context, url, error) => Container(
+        );
+      },
+      errorBuilder: (context, error, stackTrace) => Container(
         color: AppColors.surfaceLight,
         child: const Center(
           child: Icon(

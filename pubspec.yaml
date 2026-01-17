@@ -21,8 +21,6 @@ dependencies:
   # Local storage
   shared_preferences: ^2.2.2
   
-  # Image caching
-  cached_network_image: ^3.3.0
   
   # Local notifications
   flutter_local_notifications: ^16.3.0
