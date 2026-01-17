@@ -143,8 +143,17 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   }
 
   Widget _buildSliverAppBar() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isWeb = screenWidth > 600;
+    
+    // Responsive height: taller on web/tablet, standard on mobile
+    final expandedHeight = isWeb 
+        ? (screenHeight * 0.4).clamp(350.0, 500.0)
+        : 300.0;
+    
     return SliverAppBar(
-      expandedHeight: 300,
+      expandedHeight: expandedHeight,
       pinned: true,
       backgroundColor: AppColors.background,
       leading: Container(
@@ -211,7 +220,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
           if (widget.movie.backdropUrl.isNotEmpty)
               Image.network(
                 widget.movie.backdropUrl,
-                fit: BoxFit.cover,
+                fit: isWeb ? BoxFit.fitWidth : BoxFit.cover,
+                alignment: Alignment.topCenter,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Container(
