@@ -127,7 +127,29 @@ lib/
 
 ## Screenshots
 
-Screenshots can be added here
+### Splash Screen
+![Splash Screen](screenshots/splash_screen.png)
+*Animated splash screen with CinemaHub branding*
+
+### Movies Page
+![Movies Page](screenshots/movies_page.png)
+*Main movies listing with search functionality and bottom navigation*
+
+### Movie Details Page
+![Movie Details](screenshots/movie_details.png)
+*Detailed movie information with banner, overview, genres, and circular rating indicator*
+
+### Notification
+![Notification](screenshots/notification.png)
+*In-app notification triggered when "Play Now" button is pressed*
+
+### Favourites List
+![Favourites](screenshots/favourites.png)
+*Favourites list with swipe-to-delete functionality*
+
+### Watchlist
+![Watchlist](screenshots/watchlist.png)
+*Watchlist screen showing saved movies to watch later*
 
 ## Submission Notes
 
