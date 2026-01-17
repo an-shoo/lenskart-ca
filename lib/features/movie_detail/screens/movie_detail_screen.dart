@@ -283,8 +283,15 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
       );
     }
 
+    // Calculate responsive rating size based on screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+    final ratingSize = screenWidth > 600 
+        ? 100.0  // Larger for tablets/web
+        : screenWidth * 0.18; // Responsive for mobile (18% of screen width)
+    final clampedRatingSize = ratingSize.clamp(70.0, 120.0); // Min 70, Max 120
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+      padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -315,10 +322,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                 ),
               ),
               const SizedBox(width: 16),
-              // Circular rating
+              // Circular rating - responsive size
               CircularRatingWidget(
                 rating: widget.movie.ratingPercentage,
-                size: 70,
+                size: clampedRatingSize,
               ),
             ],
           ),
